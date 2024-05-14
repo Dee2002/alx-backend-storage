@@ -1,0 +1,2 @@
+// This script creates a new database named 'my_db'
+use my_db
