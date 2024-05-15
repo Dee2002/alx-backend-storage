@@ -1,25 +1,36 @@
 #!/usr/bin/env python3
+"""
+Module to print log stats from the collection `nginx`
+"""
 
 from pymongo import MongoClient
 
 
 def log_stats():
+    """
+    Function to print log stats
+    """
     client = MongoClient('mongodb://127.0.0.1:27017')
     db = client.logs
-    nginx_collection = db.nginx
+    collection = db.nginx
 
-    # Log stats
-    log_count = nginx_collection.count_documents({})
-    print(f"{log_count} logs")
+    # Print total number of logs
+    total_logs = collection.count_documents({})
+    print(f"{total_logs} logs")
+
+    # Print counts of each method
+    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     print("Methods:")
-    for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
-        count = nginx_collection.count_documents({"method": method})
+    for method in methods:
+        count = collection.count_documents({"method": method})
         print(f"\tmethod {method}: {count}")
-    status_check = nginx_collection.count_documents(
+
+    # Print number of logs with status check
+    status_check = collection.count_documents(
         {"method": "GET", "path": "/status"})
     print(f"{status_check} status check")
 
-    # Top 10 IPs
+    # Print the top 10 most present IPs
     print("IPs:")
     pipeline = [
         {
@@ -35,7 +46,7 @@ def log_stats():
             "$limit": 10
         }
     ]
-    top_ips = nginx_collection.aggregate(pipeline)
+    top_ips = collection.aggregate(pipeline)
     for ip in top_ips:
         print(f"\t{ip['_id']}: {ip['count']}")
 
