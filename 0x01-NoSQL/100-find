@@ -1,0 +1,2 @@
+// File: 100-find
+db.school.find({ name: { $regex: "^Holberton" } }).forEach(printjson);
