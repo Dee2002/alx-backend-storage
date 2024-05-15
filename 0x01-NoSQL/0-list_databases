@@ -1,5 +1,2 @@
-// This script lists all databases
-var databases = db.adminCommand('listDatabases');
-for(var i = 0; i < databases.databases.length; i++){
-    print(databases.databases[i].name + "\t" + (databases.databases[i].sizeOnDisk / 1024 / 1024 / 1024).toFixed(3) + "GB");
-}
+// my comment
+show dbs
