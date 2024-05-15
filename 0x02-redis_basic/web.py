@@ -3,11 +3,13 @@ import requests
 import redis
 from typing import Callable
 
+
 redis_instance = redis.Redis()
 
 
 def count_calls(method: Callable) -> Callable:
     """Decorator to count the number of times a URL is accessed."""
+
     def wrapper(url: str) -> str:
         """Wrapper function to increment the access count and
         call the method."""
@@ -35,3 +37,10 @@ def get_page(url: str) -> str:
     html_content = response.text
     redis_instance.setex(url, 10, html_content)
     return html_content
+
+
+if __name__ == "__main__":
+    url =
+    "http://slowwly.robertomurray.co.uk/delay/3000/url/http://www.example.com"
+    print(get_page(url))
+    print(get_page(url))  # Should fetch from cache
