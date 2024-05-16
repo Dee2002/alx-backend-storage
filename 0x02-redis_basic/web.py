@@ -40,7 +40,6 @@ def get_page(url: str) -> str:
 
 
 if __name__ == "__main__":
-    url =
-    "http://slowwly.robertomurray.co.uk/delay/3000/url/http://www.example.com"
-    print(get_page(url))
-    print(get_page(url))  # Should fetch from cache
+    url = "http://slowwly.robertomurray.co.uk"
+    print(get_page(url))  # Fetches the content (may take a few seconds)
+    print(get_page(url))  # Fetches from cache (instantaneous)
